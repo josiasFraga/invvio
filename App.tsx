@@ -1,38 +1,40 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import { StatusBar, StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
+import { useSelector, Provider } from 'react-redux';
+import store from './store';
+import { lightTheme, darkTheme } from '@constants/themes';
+import { ThemeProvider } from '@rneui/themed';
+import {SheetProvider} from 'react-native-actions-sheet';
+import Toast from 'react-native-toast-message';
+import ToastConfig from '@constants/toastConfig';
+import Routes from '@constants/routes';
+import '@components/Sheets';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+const ThemedApp = () => {
+	const currentTheme = useSelector((state) => state.theme.currentTheme);
+	const theme = currentTheme === 'dark' ? darkTheme : lightTheme;
+	return (
+		<ThemeProvider theme={theme}>
+			<SheetProvider>
+			<KeyboardAvoidingView
+				style={{ flex: 1, backgroundColor: theme.colors.background }}
+				behavior={Platform.OS === 'ios' ? 'padding' : undefined} // Ajuste o comportamento para iOS e Android
+				keyboardVerticalOffset={0}
+			>
+			<Routes />
+			</KeyboardAvoidingView>
+			<Toast config={ToastConfig(theme)} />
+			</SheetProvider>
+		</ThemeProvider>
+	);
+};
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
+		<View style={styles.container}>
+		<Provider store={store}>
+		<ThemedApp />
+		</Provider>
+		</View>
   );
 }
 

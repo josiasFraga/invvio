@@ -1,0 +1,36 @@
+{
+    "presets": ["module:@react-native/babel-preset"],
+    "plugins": [
+      [
+        "module-resolver",
+        {
+          "extensions": [
+            ".js",
+            ".ios.js",
+            ".android.js",
+            ".png",
+            ".jpg"
+          ],
+          "root": [
+            "./"
+          ],
+          "alias": {
+            "@assets": "./src/assets",
+            "@components": "./src/components",
+            "@constants": "./src/constants",
+            "@helpers": "./src/helpers",
+            "@scenes": "./src/scenes",
+            "@services": "./src/services",
+            "@styles": "./src/styles",
+            "@utils": "./src/utils",
+            "@hooks": "./src/hooks",
+            "@modules": "./src/modules",
+            "@contexts": "./src/contexts",
+            "@sounds": "./src/assets/sounds",
+            "@slices": "./src/reducers/slices",
+            "@firebase": "./src/firebase"
+          }
+        }
+      ]
+    ]
+  }
