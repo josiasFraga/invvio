@@ -140,7 +140,7 @@ export const maskDecimal = (text) => {
 	if (firstCommaIndex !== -1) {
 	  const integerPart = cleaned.slice(0, firstCommaIndex);
 	  const decimalPartRaw = cleaned.slice(firstCommaIndex + 1).replace(/,/g, '');
-	  const decimalPart = decimalPartRaw.slice(0, 3); // até 2 casas decimais
+	  const decimalPart = decimalPartRaw.slice(0, 2); // até 2 casas decimais
   
 	  return `${integerPart},${decimalPart}`;
 	}

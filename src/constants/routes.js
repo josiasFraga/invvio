@@ -13,6 +13,7 @@ import CenaMenu from '@scenes/CenaMenu';
 
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import CenaTransferir from '../scenes/CenaTransferir';
 
 
 const AppTabs = createBottomTabNavigator();
@@ -72,6 +73,12 @@ export default function Routes(props){
 
 			<Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
 			</Stack.Group>
+
+			<Stack.Screen
+			name="Transferir"
+			component={CenaTransferir}
+			options={{ animation: 'slide_from_bottom', presentation: 'fullScreenModal' }}
+			/>
 
 			<Stack.Screen name="TabsScreenUser" component={AppTabsScreenUser} />
 		</Stack.Navigator>

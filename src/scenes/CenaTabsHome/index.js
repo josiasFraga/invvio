@@ -4,9 +4,11 @@ import { useTheme, Icon } from '@rneui/themed';
 import CustomSafeAreaView from '@components/SafeAreaView';
 import { useDispatch, useSelector } from 'react-redux';
 import IconButton from '@components/Buttons/IconButton';
+import { useNavigation } from '@react-navigation/native';
 
 const CenaTabsHome = () => {
   const dispatch = useDispatch();
+  const navigation = useNavigation();
   const { theme } = useTheme();
 
   const me = useSelector((state) => state.app.me);
@@ -81,7 +83,9 @@ const CenaTabsHome = () => {
               contentContainerStyle={styled.horizontalContent}
               renderItem={({ item }) => (
                 <IconButton 
-                onPress={() => {}}
+                onPress={() => {
+                  navigation.navigate(item.name);
+                }}
                 title={item.name}
                 iconName={item.icon.name}
                 iconFamily={item.icon.type}
