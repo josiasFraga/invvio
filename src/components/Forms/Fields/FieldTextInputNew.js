@@ -4,7 +4,7 @@ import { Input, Icon, useTheme } from '@rneui/themed';
 import { getIn } from 'formik';
 
 
-import { maskMoney, maskPhone, maskCPF, maskCNPJ, maskCEP, maskNumber, maskTime, maskCCExpiry, maskDecimal } from '@utils/inputMasksUtils';
+import { maskMoney, maskPhone, maskCPF, maskCNPJ, maskCEP, maskNumber, maskTime, maskCCExpiry, maskDecimal, maskMoneyTwo } from '@utils/inputMasksUtils';
 import globalStyles from '@styles/globalStyles';
 import AppText from '@components/Typography/AppText';
 
@@ -91,6 +91,7 @@ const FieldTextInputNew = (props) => {
 
                 let formatted = text;
                 if (mask === 'money') formatted = maskMoney(text);
+                if (mask === 'money_two') formatted = maskMoneyTwo(text);
                 if (mask === 'phone') formatted = maskPhone(text);
                 if (mask === 'cpf') formatted = maskCPF(text);
                 if (mask === 'cnpj') formatted = maskCNPJ(text);

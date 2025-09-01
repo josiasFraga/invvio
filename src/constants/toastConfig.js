@@ -75,7 +75,7 @@ export default function ToastConfig(theme) {
     success: ({ text1, text2 }) => (
       <CustomToastLayout
         iconName="check-circle"
-        iconColor={theme.colors.success}
+        iconColor={theme.colors.successText}
         text1={text1}
         text2={text2}
       />

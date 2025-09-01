@@ -58,7 +58,7 @@ export function* nodePost(payload, apiUrl, errorMessage, method = 'POST') {
 		}
 	} catch (error) {
 		console.debug(error);
-		console.log(CONFIG.urlV2 + apiUrl);
+		console.log(CONFIG.url + apiUrl);
 		console.error(`[ERROR : ${method} ${apiUrl}]`, error);
 		// Capturando detalhes do erro
 		const status = error.response?.status;

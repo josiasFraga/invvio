@@ -5,6 +5,7 @@ import CustomSafeAreaView from '@components/SafeAreaView';
 import { useDispatch, useSelector } from 'react-redux';
 import IconButton from '@components/Buttons/IconButton';
 import { useNavigation } from '@react-navigation/native';
+import Balance from './components/Balance';
 
 const CenaTabsHome = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const CenaTabsHome = () => {
   const styled = useMemo(() => styles(palette), [palette]);
 
   const itens = [
-    { id: 2, name: 'Pagar', icon: { name: 'payment', type: 'material' } },
+    //{ id: 2, name: 'Pagar', icon: { name: 'payment', type: 'material' } },
     { id: 3, name: 'Transferir', icon: { name: 'swap-horiz', type: 'material' } },
     { id: 4, name: 'Depositar', icon: { name: 'account-balance', type: 'material' } },
     { id: 6, name: 'Cobrar', icon: { name: 'request-quote', type: 'material' } },
@@ -69,10 +70,7 @@ const CenaTabsHome = () => {
 
           <View>
             {/* Saldo */}
-            <View style={styled.moneyBox}>
-              <Text style={styled.accountLabel}>Saldo em conta</Text>
-              <Text style={styled.moneyText}>{me?.balance}</Text>
-            </View>
+            <Balance />
 
             {/* Menu horizontal */}
             <FlatList
@@ -112,9 +110,6 @@ const styles = (p) => StyleSheet.create({
   iconGroup: { flexDirection: 'row', justifyContent: 'space-between' },
   welcomeText: { color: '#fff', fontSize: 18, fontWeight: '700', marginTop: 40 },
   main: { flex: 1, backgroundColor: p.backgroundTerciary },
-  moneyBox: { marginVertical: 30, paddingHorizontal: 15 },
-  accountLabel: { color: p.textPrimary, fontSize: 18, fontWeight: '500' },
-  moneyText: { color: p.textPrimary, fontSize: 28, fontWeight: '700', marginTop: 5 },
   horizontalContent: { paddingHorizontal: 16, gap: 12 },
   cardRow: { width: '100%', height: 70, marginTop: 30, justifyContent: 'center', alignItems: 'center' },
   cardInner: { backgroundColor: p.ternary, width: '84%', height: '100%', flexDirection: 'row', alignItems: 'center', borderRadius: 12, paddingLeft: 12 },

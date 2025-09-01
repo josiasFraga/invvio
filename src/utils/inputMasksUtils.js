@@ -14,6 +14,22 @@ export const maskMoney = (text) => {
 	});
 };
 
+export const maskMoneyTwo = (text) => {
+	// Remove caracteres não numéricos
+	let cleaned = text.replace(/\D/g, '');
+
+	// Converte para um valor numérico e limita a entrada
+	let number = parseFloat(cleaned) / 100;
+
+	// Formata o número para o padrão de moeda brasileira
+	if (isNaN(number)) return '';
+
+	return new Intl.NumberFormat('pt-BR', {
+	minimumFractionDigits: 2,
+	maximumFractionDigits: 2,
+	}).format(number);
+};
+
 export const maskPhone = (text) => {
 	// Remove caracteres não numéricos
 	let cleaned = text.replace(/\D/g, '');

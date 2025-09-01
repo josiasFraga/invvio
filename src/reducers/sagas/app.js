@@ -50,10 +50,32 @@ function* gMe({payload}) {
     );
 }
 
+function* doTransfer({payload}) {
+    const apiUrl = '/transfers/';
+    yield nodePost(
+        payload,
+        apiUrl,
+        'Ocorreu um erro ao realizar a transferência'
+    );
+}
+
+function* gMyBalance({payload}) {
+    let apiUrl = '/users/balance/';
+    yield nodeGet(
+        payload, 
+        apiUrl,
+        'GET_MY_BALANCE_SUCCESS',
+        'GET_MY_BALANCE_FAILED',
+        'Ocorreu um erro ao buscar os dados do usuário'
+    );
+}
+
 export default function* app() {
   yield takeLatest('GET_STORED_THEME', getStoredTheme);
 	yield takeLatest('SEND_EMAIL_VALIDATION_CODE', sendEmailValidationCode);
   yield takeLatest('VALIDATE_EMAIL_VALIDATION_CODE', validateEmailValidationCode);
   yield takeLatest('REGISTER_USER', registerUser);
-  yield takeLatest('GET_ME', gMe)
+  yield takeLatest('GET_ME', gMe);
+  yield takeLatest('DO_TRANSFER', doTransfer);
+  yield takeLatest('GET_MY_BALANCE', gMyBalance);
 }
