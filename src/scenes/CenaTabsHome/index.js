@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { FlatList, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { FlatList, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { useTheme, Icon } from '@rneui/themed';
 import CustomSafeAreaView from '@components/SafeAreaView';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ const CenaTabsHome = () => {
   const { theme } = useTheme();
 
   const me = useSelector((state) => state.app.me);
+  const showBalance = useSelector((state) => state.app.showBalance);
 
   const palette = useMemo(() => ({
     background: theme.colors?.background ?? '#FFFFFF',
@@ -56,7 +57,9 @@ const CenaTabsHome = () => {
                 <Icon name="person" type="material" size={32} color="#fff" />
               </View>
               <View style={styled.iconGroup}>
-                <Icon name="visibility-off" type="material" color="#fff" />
+                <TouchableOpacity onPress={() => dispatch({ type: 'TOGGLE_SHOW_BALANCE' })}>
+                  <Icon name={`visibility${showBalance ? '-off' : ''}`} type="material" color="#fff" />
+                </TouchableOpacity>
               </View>
             </View>
             <Text style={styled.welcomeText}>Olá, {me?.nickname}</Text>

@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   myBalanceLoading: false,
   transfers: [],
   transfersLoading: false,
+  showBalance: true,
 };
 
 export const appReducer = (state = INITIAL_STATE, action) => {
@@ -34,6 +35,9 @@ export const appReducer = (state = INITIAL_STATE, action) => {
         return {...state, transfers: [], transfersLoading: false};
     case 'RESET_TRANSFERS':
         return {...state, transfers: [], transfersLoading: false};
+
+    case 'TOGGLE_SHOW_BALANCE':
+        return {...state, showBalance: !state.showBalance};
 
     case 'RESET_STATE':
     return INITIAL_STATE;

@@ -13,6 +13,7 @@ const Balance = () => {
 
   const myBalance = useSelector((state) => state.app.myBalance);
   const myBalanceLoading = useSelector((state) => state.app.myBalanceLoading);
+  const showBalance = useSelector((state) => state.app.showBalance);
 
   const getBalance = () => {
     dispatch({ type: 'GET_MY_BALANCE', payload: { } });
@@ -31,7 +32,8 @@ const Balance = () => {
     <View style={themedStyles.moneyBox}>
       <View style={{flex: 1}}>
         <Text style={themedStyles.accountLabel}>Saldo em conta</Text>
-        <Text style={themedStyles.moneyText}>{myBalanceLoading ? 'Carregando...' : formatNumber(myBalance)}</Text>
+        {showBalance && <Text style={themedStyles.moneyText}>{myBalanceLoading ? 'Carregando...' : formatNumber(myBalance)}</Text>}
+        {!showBalance && <Text style={themedStyles.moneyText}>********</Text>}
       </View>
       <Icon name="chevron-right" size={24} color={theme.colors.textPrimary} />
     </View>
