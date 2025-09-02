@@ -10,10 +10,11 @@ import CenaLogin from '@scenes/CenaLogin';
 import CenaCadastro from '@scenes/CenaCadastro';
 import CenaTabsHome from '@scenes/CenaTabsHome';
 import CenaMenu from '@scenes/CenaMenu';
+import CenaTransferir from '@scenes/CenaTransferir';
+import CenaTransferencias from '@scenes/CenaTransferencias';
 
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import CenaTransferir from '../scenes/CenaTransferir';
 
 
 const AppTabs = createBottomTabNavigator();
@@ -67,6 +68,7 @@ export default function Routes(props){
 			<Stack.Screen name="Login" component={CenaLogin} />
 			<Stack.Screen name="Home" component={CenaHome} />
 			<Stack.Screen name="Cadastro" component={CenaCadastro} />
+			<Stack.Screen name="Transferencias" component={CenaTransferencias} />
 
 			<Stack.Group screenOptions={{ animation: 'fade', headerShown: false }}>
 			</Stack.Group>

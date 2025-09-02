@@ -42,8 +42,6 @@ const CenaTabsHome = () => {
     getUserInfo();
   }, []);
 
-  console.log('ME:', me);
-
   return (
     <View style={styled.container}>
       <StatusBar translucent backgroundColor="transparent" barStyle={'light-content'} />

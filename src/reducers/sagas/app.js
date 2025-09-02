@@ -70,6 +70,22 @@ function* gMyBalance({payload}) {
     );
 }
 
+function* gTransfers({payload}) {
+  let apiUrl = '/transfers/';
+
+  if ( payload.offset === 0 ) {
+    yield put({ type: 'RESET_TRANSFERS' });
+  }
+  
+  yield nodeGet(
+      payload, 
+      apiUrl,
+      'GET_TRANSFERS_SUCCESS',
+      'GET_TRANSFERS_FAILED',
+      'Ocorreu um erro ao buscar os dados das transferências'
+  );
+}
+
 export default function* app() {
   yield takeLatest('GET_STORED_THEME', getStoredTheme);
 	yield takeLatest('SEND_EMAIL_VALIDATION_CODE', sendEmailValidationCode);
@@ -78,4 +94,6 @@ export default function* app() {
   yield takeLatest('GET_ME', gMe);
   yield takeLatest('DO_TRANSFER', doTransfer);
   yield takeLatest('GET_MY_BALANCE', gMyBalance);
+  yield takeLatest('GET_TRANSFERS', gTransfers);
+
 }

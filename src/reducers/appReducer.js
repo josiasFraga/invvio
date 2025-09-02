@@ -3,6 +3,8 @@ const INITIAL_STATE = {
   me: null,
   myBalance: 0,
   myBalanceLoading: false,
+  transfers: [],
+  transfersLoading: false,
 };
 
 export const appReducer = (state = INITIAL_STATE, action) => {
@@ -21,6 +23,17 @@ export const appReducer = (state = INITIAL_STATE, action) => {
         return {...state, myBalance: action.payload, myBalanceLoading: false};
     case 'GET_MY_BALANCE_FAILED':
         return {...state, myBalance: 0, myBalanceLoading: false};
+
+    case 'GET_TRANSFERS':
+        return {...state, transfersLoading: true};
+    case 'GET_TRANSFERS_SUCCESS':{
+			const newTransfers = [...state.transfers, ...action.payload];
+			return {...state, transfers: newTransfers, transfersLoading: false};
+        }
+    case 'GET_TRANSFERS_FAILED':
+        return {...state, transfers: [], transfersLoading: false};
+    case 'RESET_TRANSFERS':
+        return {...state, transfers: [], transfersLoading: false};
 
     case 'RESET_STATE':
     return INITIAL_STATE;
