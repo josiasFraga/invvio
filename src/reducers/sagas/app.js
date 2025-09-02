@@ -86,6 +86,16 @@ function* gTransfers({payload}) {
   );
 }
 
+function* changePassword({payload}) {
+  const apiUrl = '/users/change-password/';
+  yield nodePost(
+    payload,
+    apiUrl,
+    'Ocorreu um erro ao alterar a senha',
+    'PUT'
+  );
+}
+
 export default function* app() {
   yield takeLatest('GET_STORED_THEME', getStoredTheme);
 	yield takeLatest('SEND_EMAIL_VALIDATION_CODE', sendEmailValidationCode);
@@ -95,5 +105,5 @@ export default function* app() {
   yield takeLatest('DO_TRANSFER', doTransfer);
   yield takeLatest('GET_MY_BALANCE', gMyBalance);
   yield takeLatest('GET_TRANSFERS', gTransfers);
-
+  yield takeLatest('CHANGE_PASSWORD', changePassword);
 }

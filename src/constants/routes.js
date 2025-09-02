@@ -15,6 +15,7 @@ import CenaTransferencias from '@scenes/CenaTransferencias';
 
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import CenaMudarSenha from '@scenes/CenaMudarSenha';
 
 
 const AppTabs = createBottomTabNavigator();
@@ -74,6 +75,7 @@ export default function Routes(props){
 			</Stack.Group>
 
 			<Stack.Group screenOptions={{ presentation: 'modal', headerShown: false }}>
+			<Stack.Screen name="MudarSenha" component={CenaMudarSenha} />
 			</Stack.Group>
 
 			<Stack.Screen

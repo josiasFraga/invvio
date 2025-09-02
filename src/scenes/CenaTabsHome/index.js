@@ -19,7 +19,7 @@ const CenaTabsHome = () => {
     background: theme.colors?.background ?? '#FFFFFF',
     primary: theme.colors?.primary ?? '#0a6265',
     secondary: theme.colors?.secondary ?? '#FFFFFF',
-    ternary: theme.colors?.grey5 ?? '#F3F4F6',
+    ternary: theme.colors?.borderColor ?? '#F3F4F6',
     textPrimary: theme.colors?.black ?? '#1F2937',
     textSecondary: theme.colors?.grey2 ?? '#4B5563',
   }), [theme.colors]);
@@ -32,8 +32,6 @@ const CenaTabsHome = () => {
     { id: 4, name: 'Depositar', icon: { name: 'account-balance', type: 'material' } },
     { id: 6, name: 'Cobrar', icon: { name: 'request-quote', type: 'material' } },
   ];
-
-  const dataInfo = [{ id: 1 }, { id: 2 }];
 
   const getUserInfo = () => {
     dispatch({ type: 'GET_ME', payload: { } });
@@ -115,7 +113,7 @@ const styles = (p) => StyleSheet.create({
   cardRow: { width: '100%', height: 70, marginTop: 30, justifyContent: 'center', alignItems: 'center' },
   cardInner: { backgroundColor: p.ternary, width: '84%', height: '100%', flexDirection: 'row', alignItems: 'center', borderRadius: 12, paddingLeft: 12 },
   cardText: { fontSize: 16, fontWeight: '500', marginLeft: 6, color: p.textPrimary },
-  divider: { marginVertical: 30, width: '100%', height: 2, backgroundColor: p.ternary },
+  divider: { marginVertical: 30, width: '100%', height: 1, backgroundColor: p.ternary },
   creditCardBox: { marginHorizontal: 30, marginBottom: 30 },
   creditTitle: { fontSize: 24, fontWeight: '600', marginTop: 8, marginBottom: 14, color: p.textPrimary },
   creditDesc: { fontSize: 14, fontWeight: '500', marginBottom: 14, width: '78%', color: p.textSecondary },

@@ -4,6 +4,7 @@ import { Icon, useTheme } from '@rneui/themed';
 import { useDispatch, useSelector } from 'react-redux';
 import { formatNumber } from '@utils/stringUtils';
 import { useNavigation } from '@react-navigation/native';
+import AppText from '@components/Typography/AppText';
 
 const Balance = () => {
   const dispatch = useDispatch();
@@ -31,9 +32,9 @@ const Balance = () => {
     >
     <View style={themedStyles.moneyBox}>
       <View style={{flex: 1}}>
-        <Text style={themedStyles.accountLabel}>Saldo em conta</Text>
-        {showBalance && <Text style={themedStyles.moneyText}>{myBalanceLoading ? 'Carregando...' : formatNumber(myBalance)}</Text>}
-        {!showBalance && <Text style={themedStyles.moneyText}>********</Text>}
+        <AppText style={themedStyles.accountLabel}>Saldo em conta</AppText>
+        {showBalance && <AppText style={themedStyles.moneyText}>{myBalanceLoading ? 'Carregando...' : formatNumber(myBalance)}</AppText>}
+        {!showBalance && <AppText style={themedStyles.moneyText}>********</AppText>}
       </View>
       <Icon name="chevron-right" size={24} color={theme.colors.textPrimary} />
     </View>
@@ -41,10 +42,10 @@ const Balance = () => {
   );
 };
 
-const styles = (p) => StyleSheet.create({
+const styles = (theme) => StyleSheet.create({
   moneyBox: { marginVertical: 30, paddingHorizontal: 15, flexDirection: 'row' },
-  accountLabel: { color: p.textPrimary, fontSize: 18, fontWeight: '500' },
-  moneyText: { color: p.textPrimary, fontSize: 28, fontWeight: '700', marginTop: 5 },
+  accountLabel: { color: theme.colors.textPrimary, fontSize: 18, fontWeight: '500' },
+  moneyText: { color: theme.colors.textPrimary, fontSize: 28, fontWeight: '700', marginTop: 5 },
   
 });
 
