@@ -47,7 +47,7 @@ const CenaLogin = () => {
 
         <View style={[GlobalStyle.row, {justifyContent: 'center', alignContent: 'center', alignItems: 'center'}]}>
           <AppText style={themedStyles.registerPreText}>Ainda não tem cadastro? </AppText>
-          <TouchableOpacity style={themedStyles.registerButton} onPress={() => navigation.navigate('PreCadastro')}>
+          <TouchableOpacity style={themedStyles.registerButton} onPress={() => navigation.navigate('Cadastro')}>
             <AppText style={themedStyles.registerText}>cadastre-se</AppText>
           </TouchableOpacity>
         </View>

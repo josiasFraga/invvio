@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { FlatList, ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useTheme, Icon } from '@rneui/themed';
+import { useTheme, Icon, Avatar } from '@rneui/themed';
 import CustomSafeAreaView from '@components/SafeAreaView';
 import { useDispatch, useSelector } from 'react-redux';
 import IconButton from '@components/Buttons/IconButton';
@@ -52,7 +52,9 @@ const CenaTabsHome = () => {
           <View style={styled.topInner}>
             <View style={styled.iconsRow}>
               <View style={styled.avatar}>
-                <Icon name="person" type="material" size={32} color="#fff" />
+                {!me?.photoUrl ? 
+                <Icon name="person" type="material" size={32} color="#fff" /> : 
+                <Avatar source={{ uri: me.photoUrl }} size={52} rounded />}
               </View>
               <View style={styled.iconGroup}>
                 <TouchableOpacity onPress={() => dispatch({ type: 'TOGGLE_SHOW_BALANCE' })}>

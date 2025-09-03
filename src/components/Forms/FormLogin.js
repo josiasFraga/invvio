@@ -1,94 +1,62 @@
-import React, { useState, useEffect } from 'react';
 import { Formik } from 'formik';
 import {
   ScrollView,
   View,
   Text,
   TouchableOpacity,
-  StyleSheet,
-  Alert
+  StyleSheet
 } from 'react-native';
-import { Icon, useTheme } from '@rneui/themed';
+import { useTheme } from '@rneui/themed';
 import * as yup from 'yup';
 import { pt } from 'yup-locale-pt';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
-import { useRoute } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
 import ConfirmButton from '@components/Buttons/ConfirmButton';
 import { useAuthHelpers } from '@hooks/useAuthHelpers';
 
 import FieldTextInputNew from '@components/Forms/Fields/FieldTextInputNew';
 import globalStyles from '@styles/globalStyles';
+import { useRef } from 'react';
 
 yup.setLocale(pt);
 
 const FormLogin = () => {
 
+	const fieldEmail = useRef(null);
+	const fieldPassword = useRef(null);
+
 	const dispatch = useDispatch();
-	const route = useRoute();
 	const navigation = useNavigation();
-	const isRequesting = useSelector(state => state.appReducer.is_requesting);
 
 	const { theme } = useTheme();
 	const themedStyles = styles(theme);
     const GlobalStyle = globalStyles(theme);
-	
-	const [isBiometricAuthEnableInDevice, setIsBiometricAuthEnableInDevice] = useState(false);
 
 	const {
 		storeToken,
-		storeLegacyToken,
 		getMeCallBack,
-		biometricAuth,
 	} = useAuthHelpers();
 
-	const showAlert = (message) =>
-		Alert.alert(
-		  'Atenção!',
-		  message,
-		  [
-			{
-			  text: 'OK',
-			  //onPress: () => Alert.alert('Cancel Pressed'),
-			  style: 'cancel',
-			},
-		  ],
-		  {
-			cancelable: true
-		  },
-	);
-
-	useEffect(() => {
-		const checkBiometricAuthEnabled = async () => {
-			const isEnabled = await AsyncStorage.getItem('biometricAuthEnableInDevice');
-			if (!isEnabled || isEnabled === 'false') {
-				setIsBiometricAuthEnableInDevice(false);
-			} else {
-				setIsBiometricAuthEnableInDevice(true);
-			}
-		};
-		checkBiometricAuthEnabled();
-	}, []);
-
-  	const emailParam = route.params?.email || '';
-
-	const submit = values => {
+	const submit = (values, {setSubmitting}) => {
 		dispatch({
-		type: 'LOGIN_V2',
+		type: 'LOGIN',
 		payload: {
 			values: values,
 			callbackSuccess: async (response) => {
-				await loginLegacy(values);
-				await storeToken(response.access_token);
-				biometricAuth(values.email, response.access_token);
+				//console.log(response);
+				await storeToken(response.accessToken);
+				getMeCallBack();
+			},
+			callbackError: () => {
+				setSubmitting(false);
 			},
 			callbackFinally: (response) => {
+				setSubmitting(false);
 				if ( response && response.statusCode === 401 ) {
 					Toast.show({
 						type: 'error',
-						text1: response.message,
+						text1: 'Credenciais inválidas',
 						position: 'bottom',
 					});
 				}
@@ -97,36 +65,16 @@ const FormLogin = () => {
 		});
 	};
 
-	const loginLegacy = async values => {
-		dispatch({
-		type: 'LOGIN_TRIGGER',
-		payload: {
-			values: values,		
-			callbackSuccess: async (response) => {
-				await storeLegacyToken(response.legacy_token.token);
-				getMeCallBack();
-				setModalVisible(true);
-			},
-		},
-		});
-	};
 
 	const complementDataSchema = yup.object().shape({
 		email: yup.string().email().required(),
 		password: yup.string().required(),
 	});
 
-    const setModalVisible = (visible) => {
-        dispatch({
-            type: 'SET_BIOMETRIC_MODAL_VISIBLE',
-            payload: visible
-        });
-    }
-
 	return (
 		<>
 			<Formik
-				initialValues={{ email: emailParam, password: ''}}
+				initialValues={{ email: '', password: ''}}
 				onSubmit={submit}
 				validationSchema={complementDataSchema}
 			>
@@ -145,11 +93,11 @@ const FormLogin = () => {
 							autoCapitalize={'none'}
 							autoCorrect={false}
 
-							referencia={componentRef => (fieldEmail = componentRef)}
+							referencia={componentRef => (fieldEmail.current = componentRef)}
 							forwardRef={true}
 							returnKeyType="next"
 							onEnter={() => {
-								fieldPassword.focus()
+								fieldPassword.current && fieldPassword.current.focus();
 							}}
 						/>
 					</View>
@@ -166,7 +114,7 @@ const FormLogin = () => {
 							maxLength={20}
 							secureTextEntry={true}
 
-							referencia={componentRef => (fieldPassword = componentRef)}
+							referencia={componentRef => (fieldPassword.current = componentRef)}
 							forwardRef={true}
 							returnKeyType="done"
 						/>
@@ -184,8 +132,8 @@ const FormLogin = () => {
 					<ConfirmButton
 						buttonTitle={'Entrar'}
 						onPress={formik.handleSubmit}
-						loading={isRequesting}
-						disabled={isRequesting}
+						loading={formik.isSubmitting}
+						disabled={formik.isSubmitting}
 					/>
 
 					</ScrollView>

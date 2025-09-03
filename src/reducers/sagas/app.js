@@ -3,6 +3,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { nodePost } from './utils/nodePost';
 import { nodeGet } from './utils/nodeGet';
 
+function* login({payload}) {
+    let apiUrl = '/auth/login';
+    yield nodePost(
+        payload, 
+        apiUrl,
+        'Ocorreu um erro ao deixar recusar a solicitação para seguir'
+    );
+}
+
 function* getStoredTheme() {
   const storedTheme = yield call(AsyncStorage.getItem, 'appTheme');
   if (storedTheme) {
@@ -96,7 +105,31 @@ function* changePassword({payload}) {
   );
 }
 
+function* changeProfileImage({payload}) {
+	
+  var { photo } = payload;
+
+	if ( photo ) {
+    if ( !payload.images ) {
+      payload.images = [];
+    }
+    payload.images.push({img: photo, name: 'photo'});
+    delete payload.photo;
+  }
+
+  console.log(payload);
+  
+  const apiUrl = '/users/me/photo/';
+  yield nodePost(
+    payload,
+    apiUrl,
+    'Ocorreu um erro ao alterar a imagem de perfil',
+    'PUT'
+  );
+}
+
 export default function* app() {
+  yield takeLatest('LOGIN', login);
   yield takeLatest('GET_STORED_THEME', getStoredTheme);
 	yield takeLatest('SEND_EMAIL_VALIDATION_CODE', sendEmailValidationCode);
   yield takeLatest('VALIDATE_EMAIL_VALIDATION_CODE', validateEmailValidationCode);
@@ -106,4 +139,5 @@ export default function* app() {
   yield takeLatest('GET_MY_BALANCE', gMyBalance);
   yield takeLatest('GET_TRANSFERS', gTransfers);
   yield takeLatest('CHANGE_PASSWORD', changePassword);
+  yield takeLatest('CHANGE_PROFILE_IMAGE', changeProfileImage);
 }
