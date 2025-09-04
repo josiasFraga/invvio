@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import IconButton from '@components/Buttons/IconButton';
 import { useNavigation } from '@react-navigation/native';
 import Balance from './components/Balance';
+import NotificationIcon from './components/NotificationIcon';
 
 const CenaTabsHome = () => {
   const dispatch = useDispatch();
@@ -60,6 +61,8 @@ const CenaTabsHome = () => {
                 <TouchableOpacity onPress={() => dispatch({ type: 'TOGGLE_SHOW_BALANCE' })}>
                   <Icon name={`visibility${showBalance ? '-off' : ''}`} type="material" color="#fff" />
                 </TouchableOpacity>
+                <View style={{ width: 12 }} />
+                <NotificationIcon />
               </View>
             </View>
             <Text style={styled.welcomeText}>Olá, {me?.nickname}</Text>
