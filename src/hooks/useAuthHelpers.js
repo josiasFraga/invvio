@@ -18,10 +18,14 @@ export const useAuthHelpers = () => {
         type: 'GET_ME',
         payload: {
             callbackSuccess: async (me) => {
-                console.log(`[SWITCH ACCOUNT] -> Dados do usuário obtidos com sucesso!`, me);
+                console.log(`[GET_ME] -> Dados do usuário obtidos com sucesso!`, me);
                 await AsyncStorage.setItem('user', JSON.stringify(me));
+                dispatch({
+                    type: 'SAVE_NOTIFICATIONS_ID',
+                    payload: {}
+                });
                 
-                console.log(`[SWITCH ACCOUNT] -> Redirecionando para as tabs de usuário...`);
+                console.log(`[GET_ME] -> Redirecionando para as tabs de usuário...`);
                 navigation.dispatch(
                     CommonActions.reset({
                         index: 0,

@@ -116,8 +116,6 @@ function* changeProfileImage({payload}) {
     payload.images.push({img: photo, name: 'photo'});
     delete payload.photo;
   }
-
-  console.log(payload);
   
   const apiUrl = '/users/me/photo/';
   yield nodePost(
@@ -125,6 +123,22 @@ function* changeProfileImage({payload}) {
     apiUrl,
     'Ocorreu um erro ao alterar a imagem de perfil',
     'PUT'
+  );
+}
+
+function* saveNotificationsId() {
+  // busca o id de notificações
+  const id = yield call(AsyncStorage.getItem, 'notifications');
+
+  if ( !id ) {
+    return;
+  }
+
+  const apiUrl = '/users/me/notifications-id/';
+  yield nodePost(
+    {values: { notificationId: id }},
+    apiUrl,
+    'Ocorreu um erro ao salvar o ID de notificações'
   );
 }
 
@@ -140,4 +154,5 @@ export default function* app() {
   yield takeLatest('GET_TRANSFERS', gTransfers);
   yield takeLatest('CHANGE_PASSWORD', changePassword);
   yield takeLatest('CHANGE_PROFILE_IMAGE', changeProfileImage);
+  yield takeLatest('SAVE_NOTIFICATIONS_ID', saveNotificationsId);
 }
