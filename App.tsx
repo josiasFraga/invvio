@@ -11,6 +11,9 @@ import '@components/Sheets';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 import { OneSignal } from 'react-native-onesignal';
+import { navigate } from '@services/NavigationService';
+
+const delay_open_notification = 5000;
 
 const ThemedApp = () => {
 	const currentTheme = useSelector((state) => state.theme.currentTheme);
@@ -32,7 +35,7 @@ const ThemedApp = () => {
 };
 
 function App() {
-		const saveNotificationsID = async () => {
+	const saveNotificationsID = async () => {
 		console.log('[saveNotificationsID]');
 		const id = await OneSignal.User.pushSubscription.getIdAsync();
 		console.log('-> notification_id - ' + id);
@@ -61,7 +64,15 @@ function App() {
 				store.dispatch({ type: 'GET_NUMBER_NOTIFICATIONS_NOT_READ' });
 			},1000);*/
 
-			if ( additionalData.motivo === 'agendamento_empresa' ) {
+			if ( additionalData.motivo === 'transfer_received' ) {
+
+				const params = {
+					id: additionalData.registerId,
+				};
+
+				setTimeout(()=>{
+					navigate('Transferencias', { ...params });
+				}, delay_open_notification)
 
 				/*const params = {
 					id: additionalData.registro_id,
