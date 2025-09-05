@@ -32,6 +32,7 @@ const CenaTabsHome = () => {
     { id: 3, name: 'Transferir', icon: { name: 'swap-horiz', type: 'material' } },
     { id: 4, name: 'Depositar', icon: { name: 'account-balance', type: 'material' } },
     { id: 6, name: 'Cobrar', icon: { name: 'request-quote', type: 'material' } },
+    { id: 7, name: 'Cobrancas', icon: { name: 'list', type: 'feather' } },
   ];
 
   const getUserInfo = () => {

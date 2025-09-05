@@ -10,6 +10,8 @@ const INITIAL_STATE = {
   showBalance: true,
   notificationsNotReadCount: 0,
   notificationsNotReadCountLoading: false,
+  charges: [],
+  chargesLoading: false,
 };
 
 export const appReducer = (state = INITIAL_STATE, action) => {
@@ -57,6 +59,17 @@ export const appReducer = (state = INITIAL_STATE, action) => {
         return {...state, notifications: [], notificationsLoading: false};
     case 'RESET_NOTIFICATIONS':
         return {...state, notifications: [], notificationsLoading: false};
+
+    case 'GET_CHARGES':
+        return {...state, chargesLoading: true};
+    case 'GET_CHARGES_SUCCESS':{
+            const newCharges = [...state.charges, ...action.payload];
+            return {...state, charges: newCharges, chargesLoading: false};
+        }
+    case 'GET_CHARGES_FAILED':
+        return {...state, charges: [], chargesLoading: false};
+    case 'RESET_CHARGES':
+        return {...state, charges: [], chargesLoading: false};
 
     case 'TOGGLE_SHOW_BALANCE':
         return {...state, showBalance: !state.showBalance};

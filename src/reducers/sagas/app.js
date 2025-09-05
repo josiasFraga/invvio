@@ -187,6 +187,22 @@ function* depositMoney({payload}) {
   );
 }
 
+function* gCharges({payload}) {
+  let apiUrl = '/charges/';
+
+  if ( payload.offset === 0 ) {
+    yield put({ type: 'RESET_CHARGES' });
+  }
+
+  yield nodeGet(
+      payload, 
+      apiUrl,
+      'GET_CHARGES_SUCCESS',
+      'GET_CHARGES_FAILED',
+      'Ocorreu um erro ao buscar os dados das cobranças'
+  );
+}
+
 export default function* app() {
   yield takeLatest('LOGIN', login);
   yield takeLatest('GET_STORED_THEME', getStoredTheme);
@@ -203,5 +219,6 @@ export default function* app() {
   yield takeLatest('SAVE_NOTIFICATIONS_ID', saveNotificationsId);
   yield takeLatest('GET_NOTIFICATIONS_NOT_READ_COUNT', getNotificationsNotReadCount);
   yield takeLatest('MARK_NOTIFICATION_AS_READ', markNotificationAsRead);
+  yield takeLatest('GET_CHARGES', gCharges);
   yield takeLatest('DEPOSIT_MONEY', depositMoney);
 }
