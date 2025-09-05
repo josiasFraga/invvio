@@ -178,6 +178,15 @@ function* markNotificationAsRead({payload}) {
   );
 }
 
+function* depositMoney({payload}) {
+  const apiUrl = '/deposits/';
+  yield nodePost(
+    payload,
+    apiUrl,
+    'Ocorreu um erro ao realizar o depósito'
+  );
+}
+
 export default function* app() {
   yield takeLatest('LOGIN', login);
   yield takeLatest('GET_STORED_THEME', getStoredTheme);
@@ -194,4 +203,5 @@ export default function* app() {
   yield takeLatest('SAVE_NOTIFICATIONS_ID', saveNotificationsId);
   yield takeLatest('GET_NOTIFICATIONS_NOT_READ_COUNT', getNotificationsNotReadCount);
   yield takeLatest('MARK_NOTIFICATION_AS_READ', markNotificationAsRead);
+  yield takeLatest('DEPOSIT_MONEY', depositMoney);
 }
