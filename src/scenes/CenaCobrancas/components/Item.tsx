@@ -29,7 +29,7 @@ const Item = ({ item }: { item: CobrancaItem }) => {
 
 
   // Decide qual usuário mostrar conforme o tipo
-  const userToShow = item.type === 'received' ? item.targetUser : item.creatorUser;
+  const userToShow = item.type === 'received' ? item.creatorUser : item.targetUser;
   const initials = (userToShow?.nickname || '')
     .split(' ')
     .map((p: string) => p[0])
