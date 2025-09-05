@@ -5,7 +5,11 @@ const INITIAL_STATE = {
   myBalanceLoading: false,
   transfers: [],
   transfersLoading: false,
+  notifications: [],
+  notificationsLoading: false,
   showBalance: true,
+  notificationsNotReadCount: 0,
+  notificationsNotReadCountLoading: false,
 };
 
 export const appReducer = (state = INITIAL_STATE, action) => {
@@ -35,6 +39,24 @@ export const appReducer = (state = INITIAL_STATE, action) => {
         return {...state, transfers: [], transfersLoading: false};
     case 'RESET_TRANSFERS':
         return {...state, transfers: [], transfersLoading: false};
+
+    case 'GET_NOTIFICATIONS_NOT_READ_COUNT':
+        return {...state, notificationsNotReadCountLoading: true};
+    case 'GET_NOTIFICATIONS_NOT_READ_COUNT_SUCCESS':
+        return {...state, notificationsNotReadCount: action.payload, notificationsNotReadCountLoading: false};
+    case 'GET_NOTIFICATIONS_NOT_READ_COUNT_FAILED':
+        return {...state, notificationsNotReadCount: 0, notificationsNotReadCountLoading: false};
+
+    case 'GET_NOTIFICATIONS':
+        return {...state, notificationsLoading: true};
+    case 'GET_NOTIFICATIONS_SUCCESS':{
+            const newNotifications = [...state.notifications, ...action.payload];
+            return {...state, notifications: newNotifications, notificationsLoading: false};
+        }
+    case 'GET_NOTIFICATIONS_FAILED':
+        return {...state, notifications: [], notificationsLoading: false};
+    case 'RESET_NOTIFICATIONS':
+        return {...state, notifications: [], notificationsLoading: false};
 
     case 'TOGGLE_SHOW_BALANCE':
         return {...state, showBalance: !state.showBalance};

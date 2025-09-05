@@ -12,6 +12,7 @@ import CenaTabsHome from '@scenes/CenaTabsHome';
 import CenaMenu from '@scenes/CenaMenu';
 import CenaTransferir from '@scenes/CenaTransferir';
 import CenaTransferencias from '@scenes/CenaTransferencias';
+import CenaNotificacoes from '@scenes/CenaNotificacoes';
 
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -70,6 +71,7 @@ export default function Routes(props){
 			<Stack.Screen name="Home" component={CenaHome} />
 			<Stack.Screen name="Cadastro" component={CenaCadastro} />
 			<Stack.Screen name="Transferencias" component={CenaTransferencias} />
+			<Stack.Screen name="Notificacoes" component={CenaNotificacoes} />
 
 			<Stack.Group screenOptions={{ animation: 'fade', headerShown: false }}>
 			</Stack.Group>

@@ -95,6 +95,22 @@ function* gTransfers({payload}) {
   );
 }
 
+function* gNotifications({payload}) {
+  let apiUrl = '/notifications/';
+
+  if ( payload.offset === 0 ) {
+    yield put({ type: 'RESET_NOTIFICATIONS' });
+  }
+  
+  yield nodeGet(
+      payload, 
+      apiUrl,
+      'GET_NOTIFICATIONS_SUCCESS',
+      'GET_NOTIFICATIONS_FAILED',
+      'Ocorreu um erro ao buscar os dados das notificações'
+  );
+}
+
 function* changePassword({payload}) {
   const apiUrl = '/users/change-password/';
   yield nodePost(
@@ -142,6 +158,26 @@ function* saveNotificationsId() {
   );
 }
 
+function* getNotificationsNotReadCount({payload}) {
+  let apiUrl = '/notifications/count-not-read/';
+  yield nodeGet(
+      payload,
+      apiUrl,
+      'GET_NOTIFICATIONS_NOT_READ_COUNT_SUCCESS',
+      'GET_NOTIFICATIONS_NOT_READ_COUNT_FAILED',
+      'Ocorreu um erro ao buscar a contagem de notificações não lidas'
+  );
+}
+
+function* markNotificationAsRead({payload}) {
+  const apiUrl = `/notifications/mark-as-read/${payload.id}`;
+  yield nodePost(
+    { values: {} },
+    apiUrl,
+    'Ocorreu um erro ao marcar a notificação como lida'
+  );
+}
+
 export default function* app() {
   yield takeLatest('LOGIN', login);
   yield takeLatest('GET_STORED_THEME', getStoredTheme);
@@ -152,7 +188,10 @@ export default function* app() {
   yield takeLatest('DO_TRANSFER', doTransfer);
   yield takeLatest('GET_MY_BALANCE', gMyBalance);
   yield takeLatest('GET_TRANSFERS', gTransfers);
+  yield takeLatest('GET_NOTIFICATIONS', gNotifications);
   yield takeLatest('CHANGE_PASSWORD', changePassword);
   yield takeLatest('CHANGE_PROFILE_IMAGE', changeProfileImage);
   yield takeLatest('SAVE_NOTIFICATIONS_ID', saveNotificationsId);
+  yield takeLatest('GET_NOTIFICATIONS_NOT_READ_COUNT', getNotificationsNotReadCount);
+  yield takeLatest('MARK_NOTIFICATION_AS_READ', markNotificationAsRead);
 }
