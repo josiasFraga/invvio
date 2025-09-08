@@ -18,6 +18,7 @@ import CenaCobrancas from '@scenes/CenaCobrancas';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import CenaMudarSenha from '@scenes/CenaMudarSenha';
+import CenaPagarCobranca from '../scenes/CenaPagarCobranca';
 
 
 const AppTabs = createBottomTabNavigator();
@@ -86,6 +87,12 @@ export default function Routes(props){
 			<Stack.Screen
 			name="Transferir"
 			component={CenaTransferir}
+			options={{ animation: 'slide_from_bottom', presentation: 'fullScreenModal' }}
+			/>
+
+			<Stack.Screen
+			name="PagarCobranca"
+			component={CenaPagarCobranca}
 			options={{ animation: 'slide_from_bottom', presentation: 'fullScreenModal' }}
 			/>
 

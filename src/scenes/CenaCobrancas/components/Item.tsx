@@ -53,6 +53,7 @@ const Item = ({ item }: { item: CobrancaItem }) => {
   const formattedAmount = Number(item.amount).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
 
   return (
+    <TouchableOpacity onPress={() => { navigation.navigate('PagarCobranca', { id: item.id })}} disabled={item.type === 'sent'}>
     <View style={themedStyles.container}>
       <View style={themedStyles.row}>
         <View style={themedStyles.avatar}>{avatar}</View>
@@ -69,6 +70,7 @@ const Item = ({ item }: { item: CobrancaItem }) => {
         </View>
       </View>
     </View>
+    </TouchableOpacity>
   );
 };
 
