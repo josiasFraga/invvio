@@ -203,6 +203,15 @@ function* gCharges({payload}) {
   );
 }
 
+function* doCharge({payload}) {
+    const apiUrl = '/charges/';
+    yield nodePost(
+        payload,
+        apiUrl,
+        'Ocorreu um erro ao realizar a cobrança'
+    );
+}
+
 export default function* app() {
   yield takeLatest('LOGIN', login);
   yield takeLatest('GET_STORED_THEME', getStoredTheme);
@@ -221,4 +230,5 @@ export default function* app() {
   yield takeLatest('MARK_NOTIFICATION_AS_READ', markNotificationAsRead);
   yield takeLatest('GET_CHARGES', gCharges);
   yield takeLatest('DEPOSIT_MONEY', depositMoney);
+  yield takeLatest('DO_CHARGE', doCharge);
 }
